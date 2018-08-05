@@ -5,11 +5,9 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.anuj.mlkitdemo.R;
@@ -20,7 +18,6 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        Log.d("ext", Environment.getExternalStorageDirectory().getPath());
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
@@ -50,11 +47,6 @@ public class SplashActivity extends AppCompatActivity {
         return checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    private void requestPermission(String[] permissions, int requestCode) {
-        this.requestPermissions(permissions, requestCode);
-    }
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == 100 && grantResults.length > 0) {
@@ -63,12 +55,15 @@ public class SplashActivity extends AppCompatActivity {
                     grantResults[2] == PackageManager.PERMISSION_GRANTED) {
                 openCamera();
             } else {
-                Toast.makeText(this, "Permissions Required", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Permissions are necessary to work.", Toast.LENGTH_SHORT).show();
             }
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
+    /**
+     * Method to open the Camera Screen.
+     */
     private void openCamera() {
         Intent intent = new Intent(this, CameraActivity.class);
         startActivity(intent);

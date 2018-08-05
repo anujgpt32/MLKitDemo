@@ -38,7 +38,7 @@ public class CameraActivity extends AppCompatActivity {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        final String path = Utilities.generateImagePath();
+                        final String path = Utilities.generateImagePath(CameraActivity.this);
                         Bitmap bitmap = Utilities.convertBytesToBitmap(jpeg);
                         final boolean isSaved = FileUtils.saveBitmap(path, bitmap);
                         CameraActivity.this.runOnUiThread(new Runnable() {
